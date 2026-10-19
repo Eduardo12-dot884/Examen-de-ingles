@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6fb">
+  <meta name="description" content="Quiz de inglés básico para preparatoria: practica, presenta exámenes y repasa errores.">
+  <title>English Base — Quiz de inglés básico</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="#inicio" class="brand" aria-label="English Base, inicio">
+        <span class="brand-mark" aria-hidden="true">E</span>
+        <span>English <b>Base</b></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="streak-pill" id="totalAnswered"><span aria-hidden="true">✦</span> 0 respuestas</span>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Cambiar tema de color" title="Cambiar tema">◐</button>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="screen active" id="homeScreen" aria-labelledby="mainTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">INGLÉS · NIVEL PREPARATORIA</p>
+            <h1 id="mainTitle">Practica inglés.<br><span>Una pregunta a la vez.</span></h1>
+            <p class="hero-description">Repasa vocabulario y gramática esencial con ejercicios cortos. Cada intento combina preguntas y respuestas en un orden diferente.</p>
+            <div class="hero-points">
+              <span><span class="point-icon">✓</span> Preguntas con explicación</span>
+              <span><span class="point-icon">↻</span> Nuevas combinaciones</span>
+              <span><span class="point-icon">⌁</span> Progreso guardado en este dispositivo</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-card card-one"><span class="art-tag">WORD</span><strong>hello</strong><small>hola</small></div>
+            <div class="art-card card-two"><span class="art-check">✓</span><strong>She is a student.</strong><small>Correct answer</small></div>
+            <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+            <span class="art-star star-one">✳</span><span class="art-star star-two">✦</span>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <section class="setup-panel panel" aria-labelledby="setupTitle">
+            <div class="section-heading">
+              <div><p class="eyebrow">PREPARA TU SESIÓN</p><h2 id="setupTitle">¿Cómo quieres estudiar?</h2></div>
+              <span class="step-label">01 / 02</span>
+            </div>
+            <div class="field-block">
+              <label for="modeSelect">Modo de estudio</label>
+              <div class="select-wrap"><select id="modeSelect">
+                <option value="practice">Práctica — aprende mientras respondes</option>
+                <option value="exam">Examen — resultados al terminar</option>
+                <option value="quick">Rápido — 10 preguntas</option>
+                <option value="review">Repaso de errores — corrige tus fallos</option>
+              </select></div>
+              <p class="field-help" id="modeHelp">Recibe una explicación después de cada respuesta.</p>
+            </div>
+            <div class="settings-row">
+              <div class="field-block">
+                <label for="topicSelect">Tema</label>
+                <div class="select-wrap"><select id="topicSelect"><option value="all">Todos los temas</option></select></div>
+              </div>
+              <div class="field-block">
+                <label for="levelSelect">Nivel</label>
+                <div class="select-wrap"><select id="levelSelect">
+                  <option value="1">Nivel 1 · Principiante</option>
+                  <option value="2">Nivel 2 · Básico</option>
+                  <option value="3" disabled>Nivel 3 · Básico avanzado 🔒</option>
+                </select></div>
+              </div>
+            </div>
+            <div class="settings-row" id="lengthRow">
+              <div class="field-block">
+                <label for="lengthSelect">Preguntas por sesión</label>
+                <div class="select-wrap"><select id="lengthSelect">
+                  <option value="10">10 preguntas</option><option value="15">15 preguntas</option><option value="20" selected>20 preguntas</option>
+                </select></div>
+              </div>
+              <div class="field-block timer-setting" id="timerSetting">
+                <label for="timerToggle">Cronómetro</label>
+                <label class="switch-line"><input type="checkbox" id="timerToggle"><span class="switch" aria-hidden="true"></span><span>Activar 10 s/pregunta</span></label>
+              </div>
+            </div>
+            <button class="primary-button full-button" id="startButton" type="button">Comenzar práctica <span aria-hidden="true">→</span></button>
+            <p class="setup-note" id="setupNote">El nivel 2 se desbloquea con al menos 80 % de aciertos en el nivel 1. El nivel 3 requiere 80 % en el nivel 2.</p>
+          </section>
+
+          <aside class="side-column">
+            <section class="panel mini-stats" aria-labelledby="statsTitle">
+              <div class="section-heading compact"><div><p class="eyebrow">TU AVANCE</p><h2 id="statsTitle">Resumen</h2></div><span class="stats-icon" aria-hidden="true">↗</span></div>
+              <div class="stats-grid">
+                <div class="stat-item"><span class="stat-number" id="statAccuracy">—</span><span class="stat-label">Precisión</span></div>
+                <div class="stat-item"><span class="stat-number" id="statSessions">0</span><span class="stat-label">Sesiones</span></div>
+                <div class="stat-item"><span class="stat-number" id="statCorrect">0</span><span class="stat-label">Aciertos</span></div>
+              </div>
+              <div class="mastery-block"><div class="mastery-line"><span>Niveles desbloqueados</span><b id="unlockedText">1 de 3</b></div><div class="mastery-track"><div id="masteryFill" class="mastery-fill"></div></div></div>
+            </section>
+            <section class="tip-panel">
+              <span class="tip-mark" aria-hidden="true">✎</span><div><h3>Estudia con intención</h3><p>Lee la explicación cuando te equivoques y vuelve a intentar esas preguntas desde el repaso de errores.</p></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen quiz-screen" id="quizScreen" aria-labelledby="quizHeading" hidden>
+        <div class="quiz-topline"><button class="text-button" id="quitButton" type="button">← Salir de la sesión</button><span class="mode-tag" id="sessionModeTag">PRÁCTICA</span><span class="timer-display" id="timerDisplay" hidden>00:10</span></div>
+        <div class="progress-container"><div class="progress-meta"><span id="questionCounter">Pregunta 1 de 20</span><span id="progressPercent">5 %</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+        <div class="question-layout">
+          <div class="question-main panel">
+            <div class="question-label-row"><span class="question-category" id="questionCategory">GRAMÁTICA BÁSICA</span><span class="question-type" id="questionType">OPCIÓN MÚLTIPLE</span></div>
+            <div id="questionContext" class="question-context" hidden></div>
+            <h2 id="quizHeading" class="question-title">Choose the correct answer.</h2>
+            <p class="question-instruction" id="questionInstruction">Selecciona una respuesta.</p>
+            <div class="answer-area" id="answerArea"></div>
+            <div class="feedback-box" id="feedbackBox" aria-live="polite" hidden></div>
+            <div class="question-footer"><span id="answeredStatus" class="answered-status">Selecciona una opción para continuar.</span><button class="primary-button next-button" id="nextButton" type="button" disabled>Comprobar respuesta <span aria-hidden="true">→</span></button></div>
+          </div>
+          <aside class="question-aside"><div class="aside-card"><span class="aside-icon">◎</span><h3>Consejo de estudio</h3><p id="studyTip">Lee toda la oración antes de responder. Las palabras que la rodean pueden darte una pista.</p></div><div class="aside-card session-progress-card"><span class="eyebrow">ESTA SESIÓN</span><div class="session-score"><div><strong id="liveCorrect">0</strong><span>Aciertos</span></div><div><strong id="liveWrong">0</strong><span>Errores</span></div></div><p class="small-note" id="liveNote">En el modo práctica verás una explicación tras responder.</p></div></aside>
+        </div>
+      </section>
+
+      <section class="screen results-screen" id="resultsScreen" aria-labelledby="resultsTitle" hidden>
+        <div class="results-header"><span class="results-symbol" id="resultsSymbol">✓</span><p class="eyebrow">SESIÓN TERMINADA</p><h1 id="resultsTitle">Resultado de la práctica</h1><p id="resultsSubtitle">Aquí está tu resumen.</p></div>
+        <div class="result-score-card panel"><div class="score-ring" id="scoreRing"><div><strong id="finalGrade">8.5</strong><span>/ 10</span></div></div><div class="score-detail"><span class="eyebrow">TU RESULTADO</span><h2 id="gradeMessage">Buen trabajo</h2><p id="gradeSummary">Contestaste correctamente 17 de 20 preguntas.</p><div class="result-mini-grid"><div><strong id="resultCorrect">17</strong><span>Correctas</span></div><div><strong id="resultWrong">3</strong><span>Incorrectas</span></div><div><strong id="resultPercent">85 %</strong><span>Precisión</span></div></div></div></div>
+        <div class="topic-summary-grid" id="topicSummaryGrid" aria-live="polite"></div>
+        <div class="results-columns"><section class="panel result-panel"><div class="section-heading compact"><div><p class="eyebrow">REVISA LO APRENDIDO</p><h2>Respuestas de la sesión</h2></div></div><div id="answerReviewList" class="review-list"></div></section><aside class="panel result-panel next-steps"><p class="eyebrow">SIGUIENTE PASO</p><h2>Tu práctica continúa</h2><p id="nextStepText">Repite las preguntas que te costaron trabajo para recordarlas mejor.</p><button class="primary-button full-button" id="reviewMistakesButton" type="button">Repasar errores <span aria-hidden="true">→</span></button><button class="secondary-button full-button" id="retryButton" type="button">Nuevo intento</button><button class="text-button return-home" id="homeButton" type="button">Volver al inicio</button></aside></div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>English Base</span><span>Práctica de inglés básico · Uso sin conexión</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="quitDialog" class="confirm-dialog"><div class="dialog-content"><span class="dialog-icon">?</span><h2>¿Salir de la sesión?</h2><p>El avance de esta ronda no contará como una sesión terminada.</p><div class="dialog-actions"><button class="secondary-button" id="stayButton" type="button">Seguir practicando</button><button class="primary-button" id="confirmQuitButton" type="button">Salir</button></div></div></dialog>
+</body>
+</html>
